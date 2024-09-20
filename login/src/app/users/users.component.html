@@ -1,0 +1,74 @@
+<h2 class="main-title">USUARIOS ACTIVOS</h2>
+
+
+<section class="table-container">
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Country</th>
+            </tr>
+            </thead>
+            <tbody class="t-body" *ngFor="let user of users">
+            <tr>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.country}}</td>
+                <td class="buttons"> 
+                    <button class="btn btn-primary w-25" name="update" id={{user._id}} (click)="getId($event)">Edit</button>
+                    <button class="btn btn-danger w-30" name="delete" id={{user._id}}  (click)="deleteUser($event)">Delete</button>
+                </td>
+            </tr>
+            <tbody>
+        </table>
+        <button class="btn btn-success" (click)="openModalCreate()"> Create new user</button>
+    </div>
+</section>
+
+<div class="createUserContainer" *ngIf="isCreateUserOpen">
+    <h2 class="title">CREAR USUARIO</h2>
+    <form class="createUserForm" (ngSubmit)="createUser($event)">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address: </label>
+          <input type="email" name="email" [(ngModel)]="newUser.email" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Username: </label>
+          <input type="text" name="username" [(ngModel)]="newUser.username"   class="form-control" >
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Country: </label>
+            <input type="text"  name="country" [(ngModel)]="newUser.country" class="form-control">
+          </div>
+
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" (click)="closeModalCreate()" class="btn btn-danger">Cerrar</button>    
+          </div>
+        </form>
+</div>
+
+<div class="updateUserContainer" *ngIf="isUpdateUserOpen">
+
+    <h2 class="title">ACTUALIZAR USUARIO</h2>
+    <form class="createUserForm" (ngSubmit)="updateUser($event)">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address: </label>
+          <input type="email" name="email" [(ngModel)]="updateUserDto.email" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Username: </label>
+          <input type="text" name="username" [(ngModel)]="updateUserDto.username"   class="form-control" >
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Country: </label>
+            <input type="text"  name="country" [(ngModel)]="updateUserDto.country" class="form-control">
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" (click)="closeModalUpdate()" class="btn btn-danger">Cerrar</button>    
+        </div>
+        </form>
+</div>

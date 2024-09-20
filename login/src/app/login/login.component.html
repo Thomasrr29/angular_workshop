@@ -1,0 +1,17 @@
+
+<div class="generalContainer">
+
+    <form (ngSubmit)="formSubmit($event)">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+            <input type="email" name="username" [(ngModel)]="username" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">password</label>
+            <textarea class="form-control" name="password" [(ngModel)]="password" id="exampleFormControlTextarea1" rows="1"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+
+
