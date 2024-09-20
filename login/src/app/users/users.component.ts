@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit} from '@angular/core';
 import {UpdateUser, UserDto} from './user.create.dto'
+import { AnyTxtRecord } from 'dns';
 
 @Component({
   selector: 'app-users',
@@ -48,7 +49,9 @@ export class UsersComponent implements OnInit{
 
   createUser(event: Event){
     event.preventDefault()
-    console.log(this.newUser)
+
+
+
     this.http.post(`${this.apiUrl}`, this.newUser).subscribe(
 
       {
@@ -91,7 +94,9 @@ export class UsersComponent implements OnInit{
   updateUser(event: Event){
     event.preventDefault()
 
-    this.http.patch(`${this.apiUrl}/${this.button_id}`, this.updateUserDto).subscribe(
+    const newObject = this.removeEmptyFields(this.updateUserDto)
+
+    this.http.patch(`${this.apiUrl}/${this.button_id}`, newObject).subscribe(
       {
         next: (response) => {
           console.log(response)
@@ -101,7 +106,6 @@ export class UsersComponent implements OnInit{
         }
       }
     )
-
   }
 
   deleteUser(event: Event){
@@ -120,6 +124,17 @@ export class UsersComponent implements OnInit{
       )
     console.log(event.target)
 
+  }
+
+  removeEmptyFields(object: any){
+
+    let key: any;
+      for (key in object) {
+        if (object[key] === null || object[key] === undefined || object[key] === '') {
+          delete object[key];
+        }
+      }
+      return object;
   }
  
 }

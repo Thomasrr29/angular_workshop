@@ -6,7 +6,6 @@ import { Admin } from './entities/admin.entity';
 import { Model } from 'mongoose';
 import { loginDto } from 'src/user/dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { access } from 'fs';
 
 @Injectable()
 export class AdminService {
@@ -16,6 +15,12 @@ export class AdminService {
     private jwtService: JwtService){}
 
   async create(createAdminDto: CreateAdminDto) {
+
+    const existingUser = await this.adminModel.findOne({ email: createAdminDto.email });
+    if (existingUser) {
+      throw new ConflictException('Email already exists');
+    }
+
     const admin = new this.adminModel(createAdminDto)
     return await admin.save()
   }
